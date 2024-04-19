@@ -29,7 +29,7 @@ public class Sistema {
 			
 			// \n 
 			System.out.print("\nSitema de Gerenciamento \n======================= \n1 - Criar \n2 - Editar \n"
-					+ "3 - Deletar \n4 - Listar \n5 - Listar único \n6 - Login \n9 - Sair \n");
+					+ "3 - Deletar \n4 - Listar \n5 - Listar único \n6 - Login \n7 - Detalhes Estoque \nSair \n");
 		
 			opcao = sc.nextInt();
 			
@@ -90,7 +90,8 @@ public class Sistema {
 			
 
 		} else if (opcaoMaster == 2) {
-				
+
+			
 			switch (opcao) {
 			case 1: {
 				
@@ -107,7 +108,7 @@ public class Sistema {
 			
 			case 3: {
 				
-				//hmP.deletar(sc);
+				hmP.deletar(sc);
 				break;
 				
 			}
@@ -127,9 +128,15 @@ public class Sistema {
 			
 			case 6: {
 				
-				//hmP.login(sc);
+				hmP.login(sc);
 				break;
 				
+			}
+			
+			case 7: {
+				
+				hmP.detalheEstoque(sc);
+				break;
 			}
 			
 			case 9: {

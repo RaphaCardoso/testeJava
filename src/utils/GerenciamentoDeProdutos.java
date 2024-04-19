@@ -11,6 +11,8 @@ import java.util.List;
 
 import models.Produto;
 
+
+
 public class GerenciamentoDeProdutos {
 
 	private static final String NOME_ARQUIVO = "produtos.txt";
@@ -78,27 +80,25 @@ public class GerenciamentoDeProdutos {
 
 		return produtos;
 	}
-	
+
 	public void listarProdutos() {
-		
-		List <Produto> produtos = lerProdutos();
-		
-		if(produtos.isEmpty()) {
-			
+
+		List<Produto> produtos = lerProdutos();
+
+		if (produtos.isEmpty()) {
+
 			System.out.println("Nenhum Produto cadastrado");
-			
+
 		} else {
-			
+
 			// foreach para listar os usuários do arquivo e imprimir na tela
 			System.out.println("\n Lista de Produtos\n =================");
-			for(Produto produto : produtos) {
+			for (Produto produto : produtos) {
 				System.out.println("ID: " + produto.getId() + " _  Nome: " + produto.getNome() + " _ Preço: "
 						+ produto.getPreco() + " _ Quantidade: " + produto.getQuantidade());
 			}
 		}
 	}
-		
-		
 
 	public void ListarUnicoProduto(long id) {
 
@@ -110,20 +110,217 @@ public class GerenciamentoDeProdutos {
 				System.out.println("\n Lista de Produtos\n =================");
 				System.out.println("ID: " + produto.getId() + " _  Nome: " + produto.getNome() + " _ Preço: "
 						+ produto.getPreco() + " _ Quantidade: " + produto.getQuantidade());
+				System.out.println("");
 			}
 
 		}
 	}
-	
-	
-	
 
-	public void EditarProduto(long id, String novoNome, double novoPreco, int novaQuantidade,  int escolha) {
+	public void EditarProduto(long id, String novoNome, double novoPreco, int novaQuantidade, int escolha) {
 
+		List<Produto> produtos = lerProdutos();
+		boolean encontrado = false;
+
+		for (Produto produto : produtos) {
+
+			if (produto.getId() == id) {
+
+				switch (escolha) {
+				case 1: {
+
+					produto.setNome(novoNome);
+					System.out.println("Nome alterado com Sucesso!");
+					System.out.println("");
+					encontrado = true;
+
+					break;
+				}
+
+				case 2: {
+
+					produto.setPreco(novoPreco);
+					System.out.println("Preço alterado com Sucesso!");
+					System.out.println("");
+					encontrado = true;
+
+					break;
+
+				}
+
+				case 3: {
+
+					produto.setQuantidade(novaQuantidade);
+					System.out.println("Quantidade alterado com Sucesso!");
+					System.out.println("");
+					encontrado = true;
+
+					break;
+				}
+
+				default:
+					System.out.println("Não achou a opção");
+				}
+
+				if (encontrado) {
+
+					reescreverArquivos(produtos);
+					System.out.println("Usuario editado com sucesso!");
+					ListarUnicoProduto(id);
+
+
+				} else {
+
+					System.out.println("Produto não encontrado");
+				}
+
+			}
+		}
+
+	}
+	
+	
+	public void reescreverArquivos(List<Produto> produtos) {
+		try (BufferedWriter bw = new BufferedWriter(new FileWriter(NOME_ARQUIVO))) {
+			
+			for (Produto produto : produtos) {
+				bw.write(produto.toString());
+				bw.newLine();
+			}
+			
+		} catch (IOException e) {
+			// Exibir a mensagem de erro
+			System.err.println("Ocorreu um erro ao criar o arquivo: " + e.getMessage());
+		}
+	}
+
+	public void deletar(long id) {
+
+		List<Produto> produtos = lerProdutos();
+
+		if (produtos.removeIf(produto -> produto.getId() == id)) {
+
+			reescreverArquivos(produtos);
+			System.out.println("Produto deletado com sucesso");
+			
+		} else {
+			
+			System.out.println("Produto não encontrado");
+			
+			}
 		
 		
+	}
+
+	
+	public void login (String nome, Long id) {
+		
+		List <Produto> produtos = lerProdutos();
+		
+		boolean existe = false;
+		
+		for(Produto produto : produtos) {
+			
+			if(produto.getNome().equalsIgnoreCase(nome)) {
+				
+				if(produto.getId() == id) {
+					
+					if(produto.getNome().equalsIgnoreCase(nome)) {
+						System.out.println("Você está logado!");
+						existe = true;
+						break;
+					}
+					
+				} else {
+					System.err.println("Produto não encontrado!");
+				}
+			} 
+		}
+		
+		
+		if (existe == false) {
+		System.err.println("Nome ou ID incorretos!");
+		}
 		
 	}
 	
 
+
+	public void detalharEstoque(int escolha, Long idMax) {
+
+		List<Produto> produtos = lerProdutos();
+		
+	int id =  1;
+	int qntd;
+	double precos;
+
+	switch (escolha) {
+	case 1: {
+		double precoTotal = 0;
+		
+		for (Produto produto : produtos) {
+
+			do {
+				if (produto.getId() == id) {
+
+					qntd  = produto.getQuantidade();
+					
+					precos = produto.getPreco();
+		
+					precoTotal += (qntd * (precos));
+				}
+				
+				qntd = 0;
+				precos = 0;
+			
+			id++;
+			} while (id != idMax);
+			
+		}		
+		
+		System.out.println("O preço total somando todas as mercadorias é: " + precoTotal);
+		break;
+	}
+	
+	
+	case 2: {
+		
+		int quantidadeTotal = 0;
+
+		for (Produto produto : produtos) {
+		
+			do {
+				if (produto.getId() == id) {
+
+					qntd  = produto.getQuantidade();
+					
+					quantidadeTotal += qntd;
+		
+				}
+				
+			
+			id++;
+			} while (id != idMax);
+					
+		}	
+		
+		System.out.println("A quantidade total de Produtos é: " + quantidadeTotal);
+		break;
+		
+		
+	}
+		
+
+	default:
+		System.err.println("Erro");
+		
+		}
+	
+	
+	}
+	
 }
+
+
+	
+	
+

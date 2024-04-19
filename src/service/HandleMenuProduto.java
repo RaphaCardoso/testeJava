@@ -102,10 +102,44 @@ public class HandleMenuProduto {
 	
 	
 	public void listarUnico(Scanner sc) {
-		System.out.println("Digite o Id do usuário a ser listado: ");
+		System.out.println("Digite o Id do produto a ser listado: ");
 		long id = sc.nextLong();
 		
 		gsP.ListarUnicoProduto(id);
 	}
-
+	
+	
+	public void deletar(Scanner sc) {
+		
+		System.out.println("Digite o Id do produto a ser listado: ");
+		long id = sc.nextLong();
+		
+		gsP.deletar(id);
+		
+	}
+	
+	public void login (Scanner sc) {
+		
+		System.out.println("Digite o nome: ");
+		String nome = sc.next();
+		
+		System.out.println("Digite o Id do produto a ser listado: ");
+		long id = sc.nextLong();
+		
+		gsP.login(nome, id);
+		
+	}
+	
+	public void detalheEstoque(Scanner sc) {
+		
+		System.out.println("[1] Valor total de estoque");
+		System.out.println("[2] Quantidade total de produtos");
+		int escolha = sc.nextInt();
+		
+		Long idMax = getNextId();
+		
+		gsP.detalharEstoque(escolha, idMax);
+		
+	}
+	
 }

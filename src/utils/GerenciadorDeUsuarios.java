@@ -139,8 +139,10 @@ public class GerenciadorDeUsuarios {
 		
 		List <Usuario> usuarios = lerUsuarios();
 		
+		
 		boolean existe = false;
 		
+
 		for(Usuario usuario : usuarios) {
 			
 			if(usuario.getNome().equalsIgnoreCase(nome)) {
@@ -156,8 +158,12 @@ public class GerenciadorDeUsuarios {
 		
 		if (existe == false) {
 		System.err.println("Usuário ou senha incorretos!");
-		}
 		
+		System.out.println("");
+		
+			}
+		
+	
 	}
 	
 	public void reescreverArquivos(List<Usuario> usuarios) {
@@ -228,4 +234,27 @@ public class GerenciadorDeUsuarios {
 			System.out.println("Usuario não encontrado");
 		}
 	}
+	
+	 
+	public String  loginEsquecido(int id, String senha) {
+		
+		String senhaAntiga = "";
+		
+		List<Usuario> usuarios = lerUsuarios();
+		
+		for(Usuario usuario : usuarios) {
+			if(usuario.getId() == id) {
+		
+				senhaAntiga = usuario.getSenha();
+				
+				usuario.setSenha(senha);
+			
+				System.out.println("Senha mudada com sucesso, tente fazer login novamente!");
+			}
+		}
+		
+		
+		return senhaAntiga;
+	}
+	
 }

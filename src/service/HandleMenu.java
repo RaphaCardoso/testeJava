@@ -38,7 +38,7 @@ public class HandleMenu {
 		String senha = "";
 		String nome = "";
 
-		System.out.println("Digite o Id do usuário a ser deletado: ");
+		System.out.println("Digite o Id do produto a ser editado: ");
 		int id = sc.nextInt();
 
 		System.out.println("Digite o que quer editar: \n[1] Nome \n[2] Senha");
@@ -85,6 +85,10 @@ public class HandleMenu {
 	
 	public void login(Scanner sc) {
 		
+		int contador = 0;
+		
+		do {
+			
 		System.out.println("Faça Login com nome e senha");
 		
 		System.out.println("Nome: ");
@@ -93,8 +97,31 @@ public class HandleMenu {
 		System.out.println("Senha: ");
 		String senha = sc.next();
 		
-		gs.login(nome, senha);
 		
+		gs.login(nome, senha);
+	
+		contador++;
+		
+	} while (contador < 3);
+			
+		
+
+		System.err.println("Parece que você esqueceu a senha ou o nome");
+		System.out.println("");
+		
+
+		
+		
+		
+		System.out.println("Digite o ID do seu usuário:");
+		int id = sc.nextInt();
+
+		System.out.println("Digite nova senha:");
+		String senha = sc.next();
+		
+		String velhaSenha =	gs.loginEsquecido(id, senha);
+		
+	 
 		
 	}
 
@@ -118,5 +145,9 @@ public class HandleMenu {
 		return maxId + 1;
 
 	}
+	
+
+	
+	
 
 }
